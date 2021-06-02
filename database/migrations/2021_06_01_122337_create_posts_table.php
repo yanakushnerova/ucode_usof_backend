@@ -16,9 +16,9 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users');
-            $table->string('title', 300);
-            $table->integer('status')->default(1);
-            $table->string('content', 2000);
+            $table->string('title', 200);
+            $table->enum('status', ['active', 'inactive'])->default('inactive');
+            $table->string('content', 4000);
             $table->foreignId('category_id')->references('id')->on('categories')->nullable();
             $table->dateTime('register_time')->useCurrent();
         });

@@ -45,7 +45,7 @@ class User extends Authenticatable
         'username' => 'string',
         'email' => 'string',
         'rating' => 'integer',
-        'role' => 'integer',
+        'role' => 'string',
         'profile_picture' => 'string',
         'password' => 'string',
         'register_time' => 'datetime'

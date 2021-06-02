@@ -11,11 +11,13 @@ class Comment extends Model
 
     protected $fillable = [
         'user_id',
+        'post_id',
         'content'
     ];
 
     protected $casts = [
         'user_id' => 'integer',
+        'post_id' => 'integer',
         'content' => 'string',
         'comment_time'  => 'datetime'
     ];
