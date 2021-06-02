@@ -14,7 +14,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        return User::all();
     }
 
     /**
@@ -35,7 +35,7 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return User::create($request->all());
     }
 
     /**
@@ -44,12 +44,17 @@ class UsersController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($user_id)
     {
-        //
+        if (User::find($user_id) == null) {
+            return response(['message' => 'User does not exist'], 404);
+        } else {
+            return User::find($user_id);
+        }
     }
 
     /**
+     * 
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\User  $user
@@ -67,9 +72,14 @@ class UsersController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $user_id)
     {
-        //
+        if (User::find($user_id) == null) {
+            return response(['message' => 'User does not exist'], 404);
+        } else {
+            $data = User::find($user_id);
+            $data->update($request->all());
+        }
     }
 
     /**
@@ -78,8 +88,15 @@ class UsersController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($user_id)
     {
-        //
+        // if ($user['role'] != 'admin') {
+        //     return response(['message' => 'User is not an admin'], 403);
+        // } else 
+        if (User::find($user_id) == null) {
+            return response(['message' => 'User does not exist'], 404);
+        } else {
+            return User::destroy($user_id);
+        }
     }
 }
