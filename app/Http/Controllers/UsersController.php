@@ -74,12 +74,12 @@ class UsersController extends Controller
      */
     public function update(Request $request, $user_id)
     {
-        if (User::find($user_id) == null) {
-            return response(['message' => 'User does not exist'], 404);
-        } else {
-            $data = User::find($user_id);
-            $data->update($request->all());
-        }
+        // if (User::find($user_id) == null) {
+        //     return response(['message' => 'User does not exist'], 404);
+        // } else {
+        //     $data = User::find($user_id);
+        //     $data->update($request->all());
+        // }
     }
 
     /**

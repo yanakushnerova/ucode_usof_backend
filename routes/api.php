@@ -27,6 +27,6 @@ Route::post('users', 'App\Http\Controllers\UsersController@store');
 //find by id
 Route::get('users/{user_id}', 'App\Http\Controllers\UsersController@show');
 //update users data
-Route::patch('users/{user_id}', 'App\Http\Controllers\UsersController@destroy');
+//Route::patch('users/{user_id}', 'App\Http\Controllers\UsersController@update');
 //delete user
 Route::delete('users/{user_id}', 'App\Http\Controllers\UsersController@destroy');
