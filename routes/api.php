@@ -27,6 +27,22 @@ Route::post('users', 'App\Http\Controllers\UsersController@store');
 //find by id
 Route::get('users/{user_id}', 'App\Http\Controllers\UsersController@show');
 //update users data
-//Route::patch('users/{user_id}', 'App\Http\Controllers\UsersController@update');
+Route::patch('users/{user_id}', 'App\Http\Controllers\UsersController@update');
 //delete user
 Route::delete('users/{user_id}', 'App\Http\Controllers\UsersController@destroy');
+
+
+//POSTS
+
+//get all
+Route::get('posts', 'App\Http\Controllers\PostsController@index');
+//create post
+Route::post('posts', 'App\Http\Controllers\PostsController@store');
+//find by id
+Route::get('posts/{post_id}', 'App\Http\Controllers\PostsController@show');
+//update post
+Route::patch('posts/{post_id}', 'App\Http\Controllers\PostsController@update');
+//delete post
+Route::delete('posts/{post_id}', 'App\Http\Controllers\PostsController@destroy');
+
+//CATEGORIES
