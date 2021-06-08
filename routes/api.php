@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +19,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//AUTHENTICATION
+
+//login user
+Route::post('auth/login', 'App\Http\Controllers\AuthController@login');
+//register user
+Route::post('auth/register', 'App\Http\Controllers\AuthController@registration');
+//logout user
+Route::post('auth/logout', 'App\Http\Controllers\AuthController@logout');
+
+
 //USERS
 
 //get all
 Route::get('users', 'App\Http\Controllers\UsersController@index');
-//store all
+//create user if admin
 Route::post('users', 'App\Http\Controllers\UsersController@store');
 //find by id
 Route::get('users/{user_id}', 'App\Http\Controllers\UsersController@show');
@@ -44,5 +55,6 @@ Route::get('posts/{post_id}', 'App\Http\Controllers\PostsController@show');
 Route::patch('posts/{post_id}', 'App\Http\Controllers\PostsController@update');
 //delete post
 Route::delete('posts/{post_id}', 'App\Http\Controllers\PostsController@destroy');
+
 
 //CATEGORIES

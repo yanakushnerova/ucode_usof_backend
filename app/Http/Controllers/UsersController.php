@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -18,16 +19,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -35,7 +26,14 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        return User::create($request->all());
+        $user = User::create([
+            'login' => $request['login'],
+            'username' => $request['username'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password'])
+        ]);
+
+        return $user;
     }
 
     /**
@@ -51,18 +49,6 @@ class UsersController extends Controller
         } else {
             return User::find($user_id);
         }
-    }
-
-    /**
-     * 
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
     }
 
     /**
@@ -95,7 +81,7 @@ class UsersController extends Controller
         //     return response(['message' => 'User is not an admin'], 403);
         // } else 
         if (User::find($user_id) == null) {
-            return response(['message' => 'User does not exist'], 404);
+            return response(['message' => 'User does not exist'], 403);
         } else {
             return User::destroy($user_id);
         }

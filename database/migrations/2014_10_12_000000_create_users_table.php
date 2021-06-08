@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->integer('rating')->default(0);
             $table->enum('role', ['user', 'admin'])->default('user');
-            $table->string('profile_picture')->nullable();
+            $table->string('profile_picture')->nullable()->default(null);
             $table->string('password');
             $table->dateTime('register_time')->useCurrent();
         });
