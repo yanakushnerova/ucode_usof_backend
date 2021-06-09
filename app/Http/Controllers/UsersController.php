@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Exception;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UsersController extends Controller
 {
@@ -26,14 +28,24 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::create([
-            'login' => $request['login'],
-            'username' => $request['username'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password'])
-        ]);
+        $isUser = JWTAuth::user();
+        
+        if (!$isUser) {
+            return response(['message' => 'Token required'], 400);
+        }
 
-        return $user;
+        if ($request['role'] != 'admin') {
+            return response(['message' => 'Forbidden action'], 403);
+        } else {
+            $user = User::create([
+                'login' => $request['login'],
+                'username' => $request['username'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password'])
+            ]);
+    
+            return $user;
+        }
     }
 
     /**
@@ -42,12 +54,12 @@ class UsersController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show($user_id)
+    public function show($id)
     {
-        if (User::find($user_id) == null) {
+        if (User::find($id) == null) {
             return response(['message' => 'User does not exist'], 404);
         } else {
-            return User::find($user_id);
+            return User::find($id);
         }
     }
 
@@ -60,6 +72,12 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $isUser = JWTAuth::user();
+        
+        if (!$isUser) {
+            return response(['message' => 'Token required'], 400);
+        }
+
         if (User::find($id) == null) {
             return response(['message' => 'User does not exist'], 404);
         } else {
@@ -75,15 +93,20 @@ class UsersController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($user_id)
+    public function destroy($id)
     {
-        // if ($user['role'] != 'admin') {
-        //     return response(['message' => 'User is not an admin'], 403);
-        // } else 
-        if (User::find($user_id) == null) {
-            return response(['message' => 'User does not exist'], 403);
+        try {
+            $user = JWTAuth::toUser(JWTAuth::getToken());
+        } catch (Exception $e) {
+            return response(['message' => 'Token required'], 400);
+        }
+
+        if ($user['role'] != 'admin') {
+            return response(['message' => 'User is not admin'], 403);
+        } else if (User::find($id) == null) {
+            return response(['message' => 'User does not exist'], 404);
         } else {
-            return User::destroy($user_id);
+            return User::destroy($id);
         }
     }
 }

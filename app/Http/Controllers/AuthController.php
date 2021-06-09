@@ -6,6 +6,7 @@ use App\Models\User;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Exception;
 
 class AuthController extends Controller
 {
@@ -23,12 +24,17 @@ class AuthController extends Controller
     
     public function registration(Request $request)
     {
-        $this->validate($request, [
-            'login' => 'required|unique:users|max:20',
-            'user name' => 'required',
-
-            'body' => 'required',
-        ]);
+        try {
+            $this->validate($request, [
+                'login' => 'required|unique:users|max:20',
+                'username' => 'required|max:30',
+                'email' => 'required|unique:users|regex:/(.*)@(gmail)\.com/i',
+                'password' => 'required|max:20'
+            ]);
+        } catch (Exception $e) {
+            return response(['message' => 'Invalid format of data'], 400);
+        }
+        
 
         $credentials = $request->all();
 
@@ -52,30 +58,17 @@ class AuthController extends Controller
 
     public function logout()
     {
-        JWTAuth::invalidate(JWTAuth::getToken());
-        return response(['message' => 'Successfully logged out']);
+        try {
+            JWTAuth::invalidate(JWTAuth::getToken());
+            return response(['message' => 'Successfully logged out']);
+        } catch (Exception $e) {
+            return response(['message' => 'Log out failed'], 401);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    // public function resetPassword(Request $request, $id)
+    // {
+    //     //
+    // }
 }
