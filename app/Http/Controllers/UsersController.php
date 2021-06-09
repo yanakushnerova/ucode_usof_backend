@@ -33,8 +33,8 @@ class UsersController extends Controller
         if (!$isUser) {
             return response(['message' => 'Token required'], 400);
         }
-
-        if ($request['role'] != 'admin') {
+        
+        if ($isUser['role'] != 'admin') {
             return response(['message' => 'Forbidden action'], 403);
         } else {
             $user = User::create([
@@ -80,6 +80,8 @@ class UsersController extends Controller
 
         if (User::find($id) == null) {
             return response(['message' => 'User does not exist'], 404);
+        } else if ($isUser->id != $id) {
+            return response(['message' => 'Can\'t update others info'], 403);
         } else {
             $user = User::find($id);
             $user->update($request->all());

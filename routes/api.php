@@ -33,13 +33,13 @@ Route::post('auth/logout', 'App\Http\Controllers\AuthController@logout');
 
 //get all
 Route::get('users', 'App\Http\Controllers\UsersController@index');
-//create user if admin
+//create user FOR ADMIN
 Route::post('users', 'App\Http\Controllers\UsersController@store');
 //find by id
 Route::get('users/{user_id}', 'App\Http\Controllers\UsersController@show');
 //update users data
 Route::patch('users/{user_id}', 'App\Http\Controllers\UsersController@update');
-//delete user
+//delete user FOR ADMIN
 Route::delete('users/{user_id}', 'App\Http\Controllers\UsersController@destroy');
 
 
@@ -58,3 +58,14 @@ Route::delete('posts/{post_id}', 'App\Http\Controllers\PostsController@destroy')
 
 
 //CATEGORIES
+
+//get all
+Route::get('categories', 'App\Http\Controllers\CategoriesController@index');
+//find by id
+Route::get('categories/{category_id}', 'App\Http\Controllers\CategoriesController@show');
+//create category FOR ADMIN
+Route::post('categories', 'App\Http\Controllers\CategoriesController@store');
+//delete category FOR ADMIN
+Route::delete('categories/{category_id}', 'App\Http\Controllers\CategoriesController@destroy');
+//update FOR ADMIN
+Route::patch('categories/{category_id}', 'App\Http\Controllers\CategoriesController@update');
