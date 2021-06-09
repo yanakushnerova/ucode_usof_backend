@@ -18,16 +18,6 @@ class PostsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -46,18 +36,11 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        Post::find($id);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Post $post)
-    {
-        //
+        if (Post::find($id) == null) {
+            return response(['message' => 'No such post'], 404);
+        } else {
+            return Post::find($id);
+        }
     }
 
     /**
