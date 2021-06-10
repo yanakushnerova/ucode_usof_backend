@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Exception;
@@ -136,5 +137,53 @@ class PostsController extends Controller
         }
 
         return response()->json($categories);
+    }
+
+    public function getAllPostComments($id) {
+        $post = Post::find($id);
+
+        if (!$post) {
+            return response(['message' => 'No such post'], 404);
+        }
+
+        $allComments = Comment::all();
+        $comments = [];
+
+        for ($i = 0; $i < count($allComments); $i++) {
+            if ($allComments[$i]['post_id'] == $post['id']) {
+                array_push($comments, $allComments[$i]);
+            }
+        }
+
+        return response()->json($comments);
+    }
+
+
+    public function commentUnderPost(Request $request, $id) {
+        try {
+            $this->validate($request, [
+                'content' => 'required|max:4000'
+            ]);
+        } catch (Exception $e) {
+            return response(['message' => 'Invalid format of data'], 400);
+        }
+
+        $user = JWTAuth::user();
+
+        if (!$user) {
+            return response(['message' => 'Token required'], 400);
+        }
+
+        $post = Post::find($id);
+
+        if (!$post) {
+            return response(['message' => 'No such post'], 404);
+        }
+
+        Comment::create(([
+            'user_id' => $user->id,
+            'post_id' => $post->id,
+            'content' => $request['content']
+        ]));
     }
 }

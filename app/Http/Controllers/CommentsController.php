@@ -57,8 +57,23 @@ class CommentsController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy($id)
     {
-        //
+        $user = JWTAuth::user();
+        
+        if (!$user) {
+            return response(['message' => 'Token required'], 400);
+        }
+
+        $comment = Comment::find($id);
+        
+        if ($comment == null) {
+            return response(['message' => 'No such comment'], 404);
+        } else if ($user['role'] != 'admin' && $comment['user_id'] != $user['id']) {
+            return response(['message' => 'Can\'t delete others info'], 403);
+        } else {
+            return Comment::destroy($id);
+        }
     }
+
 }

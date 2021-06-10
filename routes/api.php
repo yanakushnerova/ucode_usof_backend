@@ -57,6 +57,7 @@ Route::delete('categories/{category_id}', 'App\Http\Controllers\CategoriesContro
 Route::patch('categories/{category_id}', 'App\Http\Controllers\CategoriesController@update');
 //get all posts of category
 Route::get('categories/{category_id}/posts', 'App\Http\Controllers\CategoriesController@getPosts');
+//create post like
 
 
 //POSTS
@@ -73,6 +74,10 @@ Route::patch('posts/{post_id}', 'App\Http\Controllers\PostsController@update');
 Route::delete('posts/{post_id}', 'App\Http\Controllers\PostsController@destroy');
 //get post categories
 Route::get('posts/{post_id}/categories', 'App\Http\Controllers\PostsController@getCategories');
+//get all comments under post
+Route::get('posts/{post_id}/comments', 'App\Http\Controllers\PostsController@getAllPostComments');
+//comment under post
+Route::post('posts/{post_id}/comments', 'App\Http\Controllers\PostsController@commentUnderPost');
 
 
 //COMMENTS
@@ -81,3 +86,6 @@ Route::get('posts/{post_id}/categories', 'App\Http\Controllers\PostsController@g
 Route::get('comments/{comment_id}', 'App\Http\Controllers\CommentsController@show');
 //update comment
 Route::patch('comments/{comment_id}', 'App\Http\Controllers\CommentsController@update');
+//delete comment
+Route::delete('comments/{comment_id}', 'App\Http\Controllers\CommentsController@destroy');
+//
