@@ -57,7 +57,6 @@ Route::delete('categories/{category_id}', 'App\Http\Controllers\CategoriesContro
 Route::patch('categories/{category_id}', 'App\Http\Controllers\CategoriesController@update');
 //get all posts of category
 Route::get('categories/{category_id}/posts', 'App\Http\Controllers\CategoriesController@getPosts');
-//create post like
 
 
 //POSTS
@@ -78,6 +77,12 @@ Route::get('posts/{post_id}/categories', 'App\Http\Controllers\PostsController@g
 Route::get('posts/{post_id}/comments', 'App\Http\Controllers\PostsController@getAllPostComments');
 //comment under post
 Route::post('posts/{post_id}/comments', 'App\Http\Controllers\PostsController@commentUnderPost');
+//create post like
+Route::post('posts/{post_id}/like', 'App\Http\Controllers\LikesController@likePost');
+//get post like
+Route::get('posts/{post_id}/like', 'App\Http\Controllers\LikesController@getPostLike');
+//delete post like
+Route::delete('posts/{post_id}/like', 'App\Http\Controllers\LikesController@deletePostLike');
 
 
 //COMMENTS
