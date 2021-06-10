@@ -18,33 +18,15 @@ class PostSeeder extends Seeder
         DB::table('posts')->insert([
             'user_id' => 2,
             'title' => 'Is php bad?',
-            'status' => 'active',
             'content' => 'Help please',
             'category_id' => 4
         ]);
 
-        // DB::table('posts')->insert([
-        //     'user_id' => '2',
-        //     'title' => 'Is php bad?',
-        //     'status' => 'active',
-        //     'content' => 'Help please',
-        //     'category_id' => '4'
-        // ]);
-
-        // DB::table('posts')->insert([
-        //     'user_id' => '2',
-        //     'title' => 'Is php bad?',
-        //     'status' => 'active',
-        //     'content' => 'Help please',
-        //     'category_id' => '4'
-        // ]);
-
-        // DB::table('posts')->insert([
-        //     'user_id' => '2',
-        //     'title' => 'Is php bad?',
-        //     'status' => 'active',
-        //     'content' => 'Help please',
-        //     'category_id' => '4'
-        // ]);
+        DB::table('posts')->insert([
+            'user_id' => '1',
+            'title' => 'First post',
+            'content' => 'Some content',
+            'category_id' => '4'
+        ]);
     }
 }

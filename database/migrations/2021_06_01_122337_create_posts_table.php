@@ -16,10 +16,10 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users');
-            $table->string('title', 200);
-            $table->enum('status', ['active', 'inactive'])->default('inactive');
-            $table->string('content', 4000);
-            $table->foreignId('category_id')->references('id')->on('categories')->nullable();
+            $table->string('title');
+            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->string('content');
+            $table->foreignId('category_id')->references('id')->on('categories');
             $table->dateTime('register_time')->useCurrent();
         });
     }

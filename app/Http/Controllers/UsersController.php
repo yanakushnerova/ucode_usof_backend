@@ -104,7 +104,7 @@ class UsersController extends Controller
         }
 
         if ($user['role'] != 'admin') {
-            return response(['message' => 'User is not admin'], 403);
+            return response(['message' => 'Can\'t delete others info'], 403);
         } else if (User::find($id) == null) {
             return response(['message' => 'User does not exist'], 404);
         } else {

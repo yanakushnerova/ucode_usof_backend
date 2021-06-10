@@ -43,20 +43,6 @@ Route::patch('users/{user_id}', 'App\Http\Controllers\UsersController@update');
 Route::delete('users/{user_id}', 'App\Http\Controllers\UsersController@destroy');
 
 
-//POSTS
-
-//get all
-Route::get('posts', 'App\Http\Controllers\PostsController@index');
-//create post
-Route::post('posts', 'App\Http\Controllers\PostsController@store');
-//find by id
-Route::get('posts/{post_id}', 'App\Http\Controllers\PostsController@show');
-//update post
-Route::patch('posts/{post_id}', 'App\Http\Controllers\PostsController@update');
-//delete post
-Route::delete('posts/{post_id}', 'App\Http\Controllers\PostsController@destroy');
-
-
 //CATEGORIES
 
 //get all
@@ -69,3 +55,17 @@ Route::post('categories', 'App\Http\Controllers\CategoriesController@store');
 Route::delete('categories/{category_id}', 'App\Http\Controllers\CategoriesController@destroy');
 //update FOR ADMIN
 Route::patch('categories/{category_id}', 'App\Http\Controllers\CategoriesController@update');
+
+
+//POSTS
+
+//get all
+Route::get('posts', 'App\Http\Controllers\PostsController@index');
+//create post
+Route::post('posts', 'App\Http\Controllers\PostsController@store');
+//find by id
+Route::get('posts/{post_id}', 'App\Http\Controllers\PostsController@show');
+//update post
+Route::patch('posts/{post_id}', 'App\Http\Controllers\PostsController@update');
+//delete post
+Route::delete('posts/{post_id}', 'App\Http\Controllers\PostsController@destroy');

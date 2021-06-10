@@ -34,7 +34,6 @@ class AuthController extends Controller
         } catch (Exception $e) {
             return response(['message' => 'Invalid format of data'], 400);
         }
-        
 
         $credentials = $request->all();
 
