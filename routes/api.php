@@ -55,6 +55,8 @@ Route::post('categories', 'App\Http\Controllers\CategoriesController@store');
 Route::delete('categories/{category_id}', 'App\Http\Controllers\CategoriesController@destroy');
 //update FOR ADMIN
 Route::patch('categories/{category_id}', 'App\Http\Controllers\CategoriesController@update');
+//get all posts of category
+Route::get('categories/{category_id}/posts', 'App\Http\Controllers\CategoriesController@getPosts');
 
 
 //POSTS
@@ -69,3 +71,13 @@ Route::get('posts/{post_id}', 'App\Http\Controllers\PostsController@show');
 Route::patch('posts/{post_id}', 'App\Http\Controllers\PostsController@update');
 //delete post
 Route::delete('posts/{post_id}', 'App\Http\Controllers\PostsController@destroy');
+//get post categories
+Route::get('posts/{post_id}/categories', 'App\Http\Controllers\PostsController@getCategories');
+
+
+//COMMENTS
+
+//get comment by id
+Route::get('comments/{comment_id}', 'App\Http\Controllers\CommentsController@show');
+//update comment
+Route::patch('comments/{comment_id}', 'App\Http\Controllers\CommentsController@update');

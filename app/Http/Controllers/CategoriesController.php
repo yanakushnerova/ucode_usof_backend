@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Exception;
@@ -126,5 +127,24 @@ class CategoriesController extends Controller
         } else {
             return Category::destroy($id);
         }
+    }
+
+    public function getPosts($id) {
+        $category = Category::find($id);
+
+        if (!$category) {
+            return response(['message' => 'No such category'], 404);
+        }
+
+        $allPosts = Post::all();
+        $posts = [];
+
+        for ($i = 0; $i < count($allPosts); $i++) {
+            if ($allPosts[$i]['category_id'] == $category['id']) {
+                array_push($posts, $allPosts[$i]);
+            }
+        }
+
+        return response()->json($posts);
     }
 }

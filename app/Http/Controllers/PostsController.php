@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Exception;
@@ -116,5 +117,24 @@ class PostsController extends Controller
         } else {
             return Post::destroy($id);
         }
+    }
+
+    public function getCategories($id) {
+        $post = Post::find($id);
+
+        if (!$post) {
+            return response(['message' => 'No such post'], 404);
+        }
+
+        $allCategories = Category::all();
+        $categories = [];
+
+        for ($i = 0; $i < count($allCategories); $i++) {
+            if ($allCategories[$i]['id'] == $post['category_id']) {
+                array_push($categories, $allCategories[$i]);
+            }
+        }
+
+        return response()->json($categories);
     }
 }
