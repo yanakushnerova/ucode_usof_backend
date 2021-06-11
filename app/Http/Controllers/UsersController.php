@@ -111,4 +111,8 @@ class UsersController extends Controller
             return User::destroy($id);
         }
     }
+
+    public function uploadAvatar() {
+        
+    }
 }

@@ -17,7 +17,7 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->nullable();
             $table->foreignId('post_id')->references('id')->on('posts')->nullable();
-            $table->string('content');
+            $table->longText('content');
             $table->dateTime('comment_time')->useCurrent();
         });
     }

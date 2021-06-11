@@ -41,6 +41,8 @@ Route::get('users/{user_id}', 'App\Http\Controllers\UsersController@show');
 Route::patch('users/{user_id}', 'App\Http\Controllers\UsersController@update');
 //delete user FOR ADMIN
 Route::delete('users/{user_id}', 'App\Http\Controllers\UsersController@destroy');
+//upload avatar
+Route::patch('users/avatar', 'App\Http\Controllers\UsersController@uploadAvatar');
 
 
 //CATEGORIES
@@ -93,4 +95,9 @@ Route::get('comments/{comment_id}', 'App\Http\Controllers\CommentsController@sho
 Route::patch('comments/{comment_id}', 'App\Http\Controllers\CommentsController@update');
 //delete comment
 Route::delete('comments/{comment_id}', 'App\Http\Controllers\CommentsController@destroy');
-//
+//create comment like
+Route::post('comments/{comment_id}/like', 'App\Http\Controllers\LikesController@likeComment');
+//get comment like
+Route::get('comments/{comment_id}/like', 'App\Http\Controllers\LikesController@getCommentLike');
+//delete comment like
+Route::delete('comments/{comment_id}/like', 'App\Http\Controllers\LikesController@deleteCommentLike');

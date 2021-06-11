@@ -18,7 +18,7 @@ class CreatePostsTable extends Migration
             $table->foreignId('user_id')->references('id')->on('users');
             $table->string('title');
             $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->string('content');
+            $table->longText('content');
             $table->foreignId('category_id')->references('id')->on('categories');
             $table->dateTime('register_time')->useCurrent();
         });
