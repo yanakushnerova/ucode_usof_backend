@@ -112,7 +112,22 @@ class UsersController extends Controller
         }
     }
 
-    public function uploadAvatar() {
-        
+    public function uploadAvatar(Request $request) {
+        $file = $request->file("profile_picture");
+
+        if(!$file) {
+            return response(['message' => 'No file uploaded'], 400);
+        }
+
+        try {
+            $user = JWTAuth::toUser(JWTAuth::getToken());
+        } catch (Exception $e) {
+            return response(['message' => 'Token required'], 400);
+        }
+
+        $path = $file->store('public/avatars');
+        $user->update(['profile_picture' => $path]);
+    
+        return response(["message" => "Avatar uploaded"]);
     }
 }

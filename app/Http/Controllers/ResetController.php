@@ -55,6 +55,6 @@ class ResetController extends Controller
 
         DB::table('users')->where('email', $data->email)->update(['password' => Hash::make($request->password)]);
         DB::table('resets')->where('email', $data->email)->delete();
-        return response(['message' => 'Password reset']);
+        return response(['message' => 'Password reset was successfull']);
     }
 }

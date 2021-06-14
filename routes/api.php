@@ -27,7 +27,6 @@ Route::post('auth/login', 'App\Http\Controllers\AuthController@login');
 Route::post('auth/register', 'App\Http\Controllers\AuthController@registration');
 //logout user
 Route::post('auth/logout', 'App\Http\Controllers\AuthController@logout');
-
 //send reset link
 Route::post('auth/password-reset', 'App\Http\Controllers\ResetController@resetPasswordEmail');
 //reset with token
@@ -46,10 +45,8 @@ Route::get('users/{user_id}', 'App\Http\Controllers\UsersController@show');
 Route::patch('users/{user_id}', 'App\Http\Controllers\UsersController@update');
 //delete user FOR ADMIN
 Route::delete('users/{user_id}', 'App\Http\Controllers\UsersController@destroy');
-
-
 //upload avatar
-Route::patch('users/avatar', 'App\Http\Controllers\UsersController@uploadAvatar');
+Route::post('users/avatar', 'App\Http\Controllers\UsersController@uploadAvatar');
 
 
 //CATEGORIES
