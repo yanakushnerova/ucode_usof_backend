@@ -32,8 +32,25 @@ class LikesController extends Controller
             return response(['message' => 'No such post'], 404);
         }
 
-        $like = DB::table('likes')->where('user_id', $user->id)->where('post_id', $id);
-        $like->delete();
+        $creatorId = DB::table('posts')->where('id', $id)->value('user_id');
+        $creatorRating = DB::table('users')->where('id', $creatorId)->value('rating');
+
+        $like = DB::table('likes')->where('user_id', $user->id)->where('post_id', $id)->get();
+        $likeType = DB::table('likes')->where('user_id', $user->id)->where('post_id', $id)->value('type');
+        
+        if ($like == null || $request['type'] != $likeType) {
+            if ($request['type'] == 'like') {
+                $creatorRating++;
+            } else if ($request['type'] == 'dislike') {
+                $creatorRating--;
+    
+                if ($creatorRating < 0) {
+                    $creatorRating == 0;
+                }
+            }
+        }
+
+        DB::table('likes')->where('user_id', $user->id)->where('post_id', $id)->delete();
 
         Like::create(([
             'user_id' => $user->id,
@@ -41,6 +58,8 @@ class LikesController extends Controller
             'comment_id' => null,
             'type' => $request['type']
         ]));
+
+        DB::table('users')->where('id', $creatorId)->update(['rating' => $creatorRating]);
     }
 
     public function getPostLike($id) {
@@ -89,8 +108,25 @@ class LikesController extends Controller
             return response(['message' => 'Token required'], 400);
         }
 
-        $like = DB::table('likes')->where('user_id', $user->id)->where('comment_id', $id);
-        $like->delete();
+        $creatorId = DB::table('comments')->where('id', $id)->value('user_id');
+        $creatorRating = DB::table('users')->where('id', $creatorId)->value('rating');
+
+        $like = DB::table('likes')->where('user_id', $user->id)->where('comment_id', $id)->get();
+        $likeType = DB::table('likes')->where('user_id', $user->id)->where('comment_id', $id)->value('type');
+
+        if ($like == null || $request['type'] != $likeType) {
+            if ($request['type'] == 'like') {
+                $creatorRating++;
+            } else if ($request['type'] == 'dislike') {
+                $creatorRating--;
+    
+                if ($creatorRating < 0) {
+                    $creatorRating == 0;
+                }
+            }
+        }
+
+        DB::table('likes')->where('user_id', $user->id)->where('comment_id', $id)->delete();
 
         Like::create(([
             'user_id' => $user->id,
@@ -98,6 +134,8 @@ class LikesController extends Controller
             'comment_id' => $id,
             'type' => $request['type']
         ]));
+
+        DB::table('users')->where('id', $creatorId)->update(['rating' => $creatorRating]);
     }
 
     public function getCommentLike($id) {
