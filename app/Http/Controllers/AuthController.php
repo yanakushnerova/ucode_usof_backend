@@ -14,9 +14,16 @@ class AuthController extends Controller
     {
         $credentials = request()->only(['login', 'password']);
         $token = JWTAuth::attempt($credentials);
+        $user = JWTAuth::user();
 
         if ($token) {
-            return ['token' => $token];
+            return ['token' => $token,
+                'id' => $user['id'],
+                'username' => $user['username'],
+                'login' => $user['login'],
+                'avatar' => $user['avatar'],
+                'role' => $user['role']
+            ];
         } else {
             return response(['message' => 'Invalid data'], 400);
         }
@@ -26,13 +33,34 @@ class AuthController extends Controller
     {
         try {
             $this->validate($request, [
-                'login' => 'required|unique:users|max:20',
-                'username' => 'required|max:30',
-                'email' => 'required|unique:users|regex:/(.*)@(gmail)\.com/i',
-                'password' => 'required|max:20'
+                'login' => 'required|unique:users|max:20|min:3'
             ]);
         } catch (Exception $e) {
-            return response(['message' => 'Invalid format of data'], 400);
+            return response(['message' => 'Invalid login (must be shorter than 20 symbols and unique)'], 400);
+        }
+
+        try {
+            $this->validate($request, [
+                'username' => 'required|max:30|min:3'
+            ]);
+        } catch (Exception $e) {
+            return response(['message' => 'Invalid username (must be shorter than 30 symbols)'], 400);
+        }
+
+        try {
+            $this->validate($request, [
+                'email' => 'required|unique:users|regex:/(.*)@(gmail)\.com/i'
+            ]);
+        } catch (Exception $e) {
+            return response(['message' => 'Invalid email'], 400);
+        }
+
+        try {
+            $this->validate($request, [
+                'password' => 'required|max:20|min:5'
+            ]);
+        } catch (Exception $e) {
+            return response(['message' => 'Password must contain 5-20 symbols'], 400);
         }
 
         $credentials = $request->all();
